@@ -1,0 +1,13 @@
+<h1>Welcome to Toskr</h1>
+
+<% if current_user.blank? %>
+  <h1>Please Sign In</h1>
+  <%= link_to 'Sign In with Github', '/auth/github' %>
+<% else %>
+  <%= image_tag(current_user.avatar_url) %>
+  <p>
+    You are signed in as <%= current_user.name %>.  Click the button below to sign out.
+  </p>
+
+  <%= button_to "Sign Out", signout_path, method: :delete %>
+<% end %>
