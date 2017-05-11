@@ -1,10 +1,8 @@
 namespace :users do
   desc 'Retrieves Starred Respositories for All Users'
-  task retrieve_starred_repositories: :environment do
-    log = ActiveSupport::Logger.new('log/users_retrieve_starred_repositories.log')
+  task retrieve_starred_repositories_all_users: :environment do
+    log = ActiveSupport::Logger.new('log/users_retrieve_starred_repositories_all_users.log')
     start_time = Time.now
-    repos_count = Repo.count
-
     log.info "Task started at #{start_time}"
 
     User.find_each do |user|
