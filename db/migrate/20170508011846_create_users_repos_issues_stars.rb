@@ -28,14 +28,14 @@ class CreateUsersReposIssuesStars < ActiveRecord::Migration[5.1]
       t.string :title
       t.string :answer
       t.datetime :closed_at
-      t.belongs_to :repos, index: true
+      t.belongs_to :repo, index: true
 
       t.timestamps
     end
 
     create_table :stars do |t|
-      t.belongs_to :users, index: true
-      t.belongs_to :repos, index: true
+      t.belongs_to :user, index: true
+      t.belongs_to :repo, index: true
 
       t.timestamps
     end

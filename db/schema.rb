@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 20170508011846) do
     t.string "title"
     t.string "answer"
     t.datetime "closed_at"
-    t.integer "repos_id"
+    t.integer "repo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["repos_id"], name: "index_issues_on_repos_id"
+    t.index ["repo_id"], name: "index_issues_on_repo_id"
   end
 
   create_table "repos", force: :cascade do |t|
@@ -32,15 +32,16 @@ ActiveRecord::Schema.define(version: 20170508011846) do
     t.datetime "last_checked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["full_name"], name: "index_repos_on_full_name"
   end
 
   create_table "stars", force: :cascade do |t|
-    t.integer "users_id"
-    t.integer "repos_id"
+    t.integer "user_id"
+    t.integer "repo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["repos_id"], name: "index_stars_on_repos_id"
-    t.index ["users_id"], name: "index_stars_on_users_id"
+    t.index ["repo_id"], name: "index_stars_on_repo_id"
+    t.index ["user_id"], name: "index_stars_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -8,6 +8,13 @@
   <p>
     You are signed in as <%= current_user.name %>.  Click the button below to sign out.
   </p>
-
+  <strong>Your repos:</strong>
+  <ul>
+    <% @repos.each do |repo| %>
+      <li>
+        <%= repo.full_name %>
+      </li>
+    <% end %>
+  </ul>
   <%= button_to "Sign Out", signout_path, method: :delete %>
 <% end %>
