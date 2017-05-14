@@ -1,3 +1,3 @@
 class Issue < ApplicationRecord
-  belongs_to :repos
+  belongs_to :repos, optional: true
 end
