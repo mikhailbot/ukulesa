@@ -14,6 +14,7 @@ namespace :users do
             repo.owner_name = starred_repo.owner.login
             repo.owner_id = starred_repo.owner.id
             repo.avatar_url = starred_repo.owner.avatar_url
+            repo.last_checked = Time.now
             repo.save!
             log.info "Added #{repo.full_name} by #{user.username}"
           end
