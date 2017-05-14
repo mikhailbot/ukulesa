@@ -12,14 +12,16 @@ namespace :repos do
 
       issues.each do |issue|
         begin
-          new_issue = Issue.create(:number => issue.number, :title => issue.title, :closed_at => DateTime.parse(issue.closed_at))
+          new_issue = Issue.create(:repo_id => repo.id, :number => issue.number, :title => issue.title,
+            :closed_at => DateTime.parse(issue.closed_at))
 
-          # Need to get answer to question here if possible
+          answer = @github.retrieve_ama_answer(repo.owner_name, repo.name, issue.number)
+          new_issue.update(answer: answer)
 
-          repo.issues << new_issue
+          new_issue.save!
           log.info "Added new issue #{issue.number} for #{repo.full_name}"
-        rescue
-          puts "Something happened with #{issue.number} for #{repo.full_name}"
+        rescue ActiveRecord::RecordInvalid
+          log.info "Issue #{issue.number} already exists for #{repo.full_name}"
         end
       end unless issues.nil?
 
