@@ -8,6 +8,8 @@ class CreateUsersReposIssuesStars < ActiveRecord::Migration[5.1]
       t.string :provider, null: false
       t.string :uid, null: false
       t.string :oauth_token
+      t.integer :notification_schedule, default: 1
+      t.datetime :last_notified, default: -> { 'CURRENT_TIMESTAMP' }
 
       t.timestamps
     end

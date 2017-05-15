@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20170508011846) do
     t.string "provider", null: false
     t.string "uid", null: false
     t.string "oauth_token"
+    t.integer "notification_schedule", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
