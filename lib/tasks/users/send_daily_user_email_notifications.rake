@@ -16,7 +16,7 @@ namespace :users do
 
         user.repos.each do |repo|
           repo.issues.where("created_at > ?", 1.day.ago).each do |issue|
-            @user_options[:substitution_data][:answered_questions] << { :owner => repo.owner_name, :answer => issue.answer, :link => nil }
+            @user_options[:substitution_data][:answered_questions] << { :owner => repo.owner_name, :answer => issue.answer, :link => issue.link }
           end
         end
 

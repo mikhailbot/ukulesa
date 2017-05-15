@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20170508011846) do
     t.integer "number"
     t.string "title"
     t.string "answer"
+    t.string "link"
     t.datetime "closed_at"
     t.integer "repo_id"
     t.datetime "created_at", null: false
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 20170508011846) do
     t.string "uid", null: false
     t.string "oauth_token"
     t.integer "notification_schedule", default: 1
+    t.datetime "last_notified"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

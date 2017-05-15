@@ -12,7 +12,10 @@ namespace :repos do
 
       issues.each do |issue|
         begin
-          new_issue = Issue.create(:repo_id => repo.id, :number => issue.number, :title => issue.title,
+          new_issue = Issue.create(:repo_id => repo.id,
+            :number => issue.number,
+            :title => issue.title,
+            :link => issue.html_url,
             :closed_at => DateTime.parse(issue.closed_at))
 
           answer = @github.retrieve_ama_answer(repo.owner_name, repo.name, issue.number)

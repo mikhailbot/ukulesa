@@ -29,6 +29,7 @@ class CreateUsersReposIssuesStars < ActiveRecord::Migration[5.1]
       t.integer :number
       t.string :title
       t.string :answer
+      t.string :link
       t.datetime :closed_at
       t.belongs_to :repo, index: true
 
