@@ -13,22 +13,10 @@ class GithubApiService
     end
   end
 
-  def retrieve_new_closed_issues(user, repo, time)
-    @github.issues.list user: user, repo: repo, state: 'closed', since: time.to_formatted_s(:iso8601)
-  end
-
-  def retrieve_ama_answer(user, repo, issue)
-    answer = nil
-    comments = @github.issues.comments.all user: user, repo: repo, number: issue
-
-    comments.each do |comment|
-      if comment.user.login == user
-        answer = comment.body
-        break
-      end
-    end unless comments.nil?
-
-    answer
+  def retrieve_new_closed_issues
+    Repo.find_each do |repo|
+      repo_closed_issues(repo)
+    end
   end
 
   private
@@ -53,5 +41,43 @@ class GithubApiService
         end
       end
     end unless starred_repos.nil?
+  end
+
+  def repo_closed_issues(repo)
+    issues = @github.issues.list user: repo.owner_name, repo: repo.name, state: 'closed', since: repo.last_checked.to_formatted_s(:iso8601)
+
+    issues.each do |issue|
+      begin
+        new_issue = Issue.create(:repo_id => repo.id,
+        :number => issue.number,
+        :title => issue.title,
+        :link => issue.html_url,
+        :closed_at => DateTime.parse(issue.closed_at))
+
+        answer = retrieve_ama_answer(repo.owner_name, repo.name, issue.number)
+        new_issue.update(answer: answer)
+
+        new_issue.save!
+      rescue ActiveRecord::RecordInvalid
+        puts "Issue #{issue.number} already exists for #{repo.full_name}"
+      end
+    end unless issues.nil?
+
+    repo.update(last_checked: Time.now)
+    repo.save!
+  end
+
+  def retrieve_ama_answer(user, repo, issue)
+    answer = nil
+    comments = @github.issues.comments.all user: user, repo: repo, number: issue
+
+    comments.each do |comment|
+      if comment.user.login == user
+        answer = comment.body
+        break
+      end
+    end unless comments.nil?
+
+    answer
   end
 end
