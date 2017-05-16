@@ -20,6 +20,7 @@ gem 'omniauth-github'
 gem 'github_api'
 gem 'simple_spark'
 gem 'sidekiq'
+gem 'pg'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
