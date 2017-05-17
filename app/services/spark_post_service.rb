@@ -14,12 +14,13 @@ class SparkPostService
   private
 
   def generate_daily_email(user)
+    @subject = "Ukulesa Daily Update for #{Date.today.to_formatted_s(:long)}"
     @options = { :content => { :template_id => "ukulesa-daily-notification" }, :recipients => [] }
 
     if user.notification_schedule == 1
       @user_options = {
         :address => { :email => user.email, :name => user.name },
-        :substitution_data => { :answered_questions => [], :name => user.name }
+        :substitution_data => { :answered_questions => [], :subject => @subject }
       }
 
       user.repos.each do |repo|
@@ -36,6 +37,7 @@ class SparkPostService
       unless @user_options[:substitution_data][:answered_questions].nil?
         @options[:recipients] << (@user_options)
         @simple_spark.transmissions.create(@options)
+        user.update(last_notified: Time.now)
       end
     end
   end
