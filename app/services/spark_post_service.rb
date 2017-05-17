@@ -34,7 +34,7 @@ class SparkPostService
         end
       end
 
-      unless @user_options[:substitution_data][:answered_questions].nil?
+      unless @user_options[:substitution_data][:answered_questions].empty?
         @options[:recipients] << (@user_options)
         @simple_spark.transmissions.create(@options)
         user.update(last_notified: Time.now)
