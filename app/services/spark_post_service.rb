@@ -24,7 +24,7 @@ class SparkPostService
 
       user.repos.each do |repo|
         repo.issues.where("created_at > ?", 1.day.ago).each do |issue|
-          @user_options[:substitution_data][:answered_questions] << { :owner => repo.owner_name, :answer => issue.answer, :link => issue.link }
+          @user_options[:substitution_data][:answered_questions] << { :owner => repo.owner_name, :answer => issue.answer, :link => issue.link, :number => issue.number }
         end
       end
 
