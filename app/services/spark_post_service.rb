@@ -15,7 +15,7 @@ class SparkPostService
 
   def generate_daily_email(user)
     @subject = "Ukulesa Daily Update for #{Date.today.to_formatted_s(:long)}"
-    @options = { :content => { :template_id => "ukulesa-daily-notification" }, :recipients => [] }
+    @options = { :content => { :template_id => "ukulesa-daily-update" }, :recipients => [] }
 
     if user.notification_schedule == 1
       @user_options = {

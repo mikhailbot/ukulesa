@@ -55,7 +55,8 @@ class GithubApiService
         :closed_at => DateTime.parse(issue.closed_at))
 
         answer = retrieve_ama_answer(repo.owner_name, repo.name, issue.number)
-        new_issue.update(answer: answer)
+        html_answer = convert_to_html(answer)
+        new_issue.update(answer: html_answer)
 
         new_issue.save!
       rescue ActiveRecord::RecordInvalid
@@ -79,5 +80,11 @@ class GithubApiService
     end unless comments.nil?
 
     answer
+  end
+
+  def convert_to_html(string)
+    renderer = Redcarpet::Render::HTML.new()
+    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
+    markdown.render(string)
   end
 end
