@@ -28,7 +28,7 @@ class SparkPostService
           @user_options[:substitution_data][:answered_questions] << {
             :owner => repo.owner_name,
             :answer => issue.answer,
-            :link => issue.link,
+            :link => issue.link.sub(/^https?\:\/\//, ''),
             :number => issue.number,
             :title => issue.title }
         end
