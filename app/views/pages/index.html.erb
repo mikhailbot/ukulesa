@@ -1,17 +1,2 @@
-<% if current_user.blank? %>
-  <h1>Please Sign In</h1>
-  <%= link_to 'Sign In with Github', '/auth/github' %>
-<% else %>
-  <p>
-    You are signed in as <%= current_user.name %>.  Click the button below to sign out.
-  </p>
-  <strong>Your repos:</strong>
-  <ul>
-    <% @repos.each do |repo| %>
-      <li>
-        <%= repo.full_name %>
-      </li>
-    <% end %>
-  </ul>
-  <%= button_to "Sign Out", signout_path, method: :delete %>
-<% end %>
+<h1>Please Sign In</h1>
+<%= link_to 'Sign In with Github', '/auth/github' %>

@@ -3,4 +3,9 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy', as: 'signout'
 
   root to: 'pages#index'
+
+  scope module: :pages do
+    get '/profile', to: 'profiles#index'
+
+  end
 end

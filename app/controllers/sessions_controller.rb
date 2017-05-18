@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       puts error
       flash[:warning] = "There was an error while trying to authenticate you..."
     end
-    redirect_to root_path
+    redirect_to '/profile'
   end
 
   def destroy
