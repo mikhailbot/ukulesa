@@ -6,6 +6,7 @@ class RetrieveStarsWorker
 
     if user
       GithubApiService.new(user.oauth_token).retrieve_starred_repositories(user)
+      SparkPostService.new().send_welcome_email(user_id)
     else
       GithubApiService.new(ENV['GITHUB_ACCESS_TOKEN']).retrieve_starred_repositories
     end

@@ -11,34 +11,69 @@ class SparkPostService
     end
   end
 
+  def send_welcome_email(user_id)
+    user = User.find_by_id(user_id)
+
+    unless user.sent_welcome_email
+      generate_welcome_email(user)
+    end
+  end
+
   private
 
   def generate_daily_email(user)
-    @subject = "Ukulesa Daily Update for #{Date.today.to_formatted_s(:long)}"
-    @options = { :content => { :template_id => "ukulesa-daily-update" }, :recipients => [] }
+    subject = "Ukulesa Daily Update for #{Date.today.to_formatted_s(:long)}"
+    options = { :content => { :template_id => "ukulesa-daily-update" }, :recipients => [] }
 
     if user.notification_schedule == 1
-      @user_options = {
+      user_options = {
         :address => { :email => user.email, :name => user.name },
-        :substitution_data => { :answered_questions => [], :subject => @subject }
+        :substitution_data => { :answered_questions => [], :subject => subject }
       }
 
       user.repos.each do |repo|
         repo.issues.where("created_at > ?", 1.day.ago).each do |issue|
-          @user_options[:substitution_data][:answered_questions] << {
+          user_options[:substitution_data][:answered_questions] << {
             :owner => repo.owner_name,
             :answer => issue.answer,
             :link => issue.link.sub(/^https?\:\/\//, ''),
             :number => issue.number,
             :title => issue.title }
+          end
+        end
+
+        unless user_options[:substitution_data][:answered_questions].empty? || user.last_notified > 1.day.ago
+          options[:recipients] << user_options
+          @simple_spark.transmissions.create(options)
+          user.update(last_notified: Time.now)
         end
       end
+    end
 
-      unless @user_options[:substitution_data][:answered_questions].empty? || user.last_notified > 1.day.ago
-        @options[:recipients] << (@user_options)
-        @simple_spark.transmissions.create(@options)
-        user.update(last_notified: Time.now)
+    def generate_welcome_email(user)
+      subject = "Welcome to Ukulesa"
+      options = { :content => { :template_id => ""}, :recipients => [] }
+      user_options = {
+        :address => { :email => user.email, :name => user.name },
+        :substitution_data => { :subject => subject, :stars => [] }
+      }
+
+      if Star.where(user_id: user.id).exists?
+        user.repos.each do |repo|
+          user_options[:substitution_data][:stars] << {
+            :owner => repo.owner_name,
+            :link => "github.com/#{repo.full_name}"
+          }
+        end
+
+        options[:content][:template_id] = "ukulesa-signed-up-with-stars"
+        options[:recipients] << user_options
+      else
+        options[:content][:template_id] = "ukulesa-signed-up-with-no-stars"
+        options[:recipients] << user_options
       end
+
+      @simple_spark.transmissions.create(options)
+      user.update(sent_welcome_email: true)
     end
   end
-end
