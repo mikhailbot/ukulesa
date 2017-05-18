@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .brand {
+    display: flex;
+    align-items: flex-end;
+
+    .logo {
+      display: inline-block;
+
+      img {
+        height: 2rem;
+        width: 2rem;
+      }
+    }
+
+    .title {
+      display: inline-block;
+      color: $brand-color;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+  }
+}

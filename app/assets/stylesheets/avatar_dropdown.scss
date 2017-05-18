@@ -1,0 +1,35 @@
+.user-avatar {
+  .avatar {
+
+    img {
+      height: 2rem;
+      width: 2rem;
+      border-radius: 1rem;
+    }
+  }
+
+  .dropdown {
+    position: absolute;
+    background-color: $brand-color;
+    color: $white;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    right: 1rem;
+
+    .label {
+      font-size: 0.75rem;
+    }
+
+    .user-info {
+      .username {
+        font-size: 1.25rem;
+        font-weight: 700;
+        padding-top: 0.25rem;
+      }
+    }
+
+    .notification-status {
+      padding-top: 1rem;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<div class="header">
+  <div class="brand">
+    <div class="logo">
+      <%= image_tag("logo.png") %>
+    </div>
+    <div class="title">
+      kulesa
+    </div>
+  </div>
+
+  <% unless current_user.blank? %>
+    <%= render "shared/avatar_dropdown" %>
+  <% end %>
+</div>

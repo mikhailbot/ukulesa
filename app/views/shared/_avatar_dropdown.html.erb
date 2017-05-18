@@ -1,0 +1,20 @@
+<div class="user-avatar">
+  <div id="avatar-trigger" class="avatar">
+    <%= image_tag(current_user.avatar_url) %>
+  </div>
+  <div class="dropdown">
+    <div class="user-info">
+      <div class="label">
+        username
+      </div>
+      <div class="username">
+        <%= current_user.username %>
+      </div>
+    </div>
+    <div class="notification-status">
+      <div class="label">
+        notification
+      </div>
+    </div>
+  </div>
+</div>
