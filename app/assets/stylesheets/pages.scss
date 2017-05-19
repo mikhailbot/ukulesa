@@ -1,7 +1,8 @@
 .landing-page {
+  padding: 2rem 0.5rem;
+
   .lead-title {
     h1 {
-      width: 80%;
       margin: 3rem auto;
       text-align: center;
       color: $black;
@@ -14,16 +15,14 @@
   }
 
   .lead-cta {
-    width: 20rem;
-    margin: auto;
+    margin: 4rem auto;
 
     .cta {
-      background-color: $brand-color;
-      border-radius: 0.5rem;
       text-align: center;
-      margin: 4rem 0 4rem;
 
       a {
+        background-color: $brand-color;
+        border-radius: 0.5rem;
         display: inline-block;
         color: $white;
         text-decoration: none;
@@ -45,7 +44,7 @@
   .cta-followup {
     color: $black;
     text-align: center;
-    
+
     h2 {
       font-size: 2rem;
     }
@@ -60,7 +59,7 @@
       li {
         counter-increment: li;
         font-size: 1.25rem;
-        padding-bottom: 1rem;
+        padding-bottom: 0.75rem;
       }
 
       li::before {
