@@ -3,6 +3,10 @@ class Pages::ProfilesController < ApplicationController
     if current_user.nil?
       redirect_to '/'
     else
+      set_meta_tags title: current_user.username, reverse: true,
+                description: 'Get an email when a GitHub AMA question gets answered.',
+                keywords: 'GitHub, AMA, Email, Notifications'
+
       @repos = current_user.repos
       @user_avatar = current_user.avatar_url
     end

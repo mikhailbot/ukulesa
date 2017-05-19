@@ -23,6 +23,7 @@ gem 'simple_spark'
 gem 'sidekiq'
 gem 'pg'
 gem 'redcarpet'
+gem 'meta-tags'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
