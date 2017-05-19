@@ -1,0 +1,26 @@
+.user-avatar {
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    .sign-out {
+      margin-right: 0.5rem;
+
+      a {
+        text-decoration: none;
+        color: $black;
+        font-weight: 700;
+      }
+    }
+
+    .avatar {
+      img {
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 1.25rem;
+      }
+    }
+  }
+}
