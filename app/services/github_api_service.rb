@@ -59,6 +59,7 @@ class GithubApiService
         new_issue.update(answer: html_answer)
 
         new_issue.save!
+        SendImmediateEmailWorker.perform_async(new_issue.id)
       rescue ActiveRecord::RecordInvalid
         puts "Issue #{issue.number} already exists for #{repo.full_name}"
       end

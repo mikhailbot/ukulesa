@@ -11,6 +11,12 @@ class SparkPostService
     end
   end
 
+  def send_immediate_notification(issue)
+    User.find_each do |user|
+      generate_immediate_email(user, issue)
+    end
+  end
+
   def send_welcome_email(user_id)
     user = User.find_by_id(user_id)
 
@@ -43,6 +49,31 @@ class SparkPostService
         end
 
         unless user_options[:substitution_data][:answered_questions].empty? || user.last_notified > 1.day.ago
+          options[:recipients] << user_options
+          @simple_spark.transmissions.create(options)
+          user.update(last_notified: Time.now)
+        end
+      end
+    end
+
+    def generate_immediate_email(user, issue)
+      subject = "Ukulesa Update for ##{issue.number} #{issue.repo.full_name}"
+      options = { :content => { :template_id => "ukulesa-daily-update" }, :recipients => [] }
+
+      if user.notification_schedule == 2
+        user_options = {
+          :address => { :email => user.email, :name => user.name },
+          :substitution_data => { :answered_questions => [], :subject => subject }
+        }
+
+        user_options[:substitution_data][:answered_questions] << {
+          :owner => issue.repo.owner_name,
+          :answer => issue.answer,
+          :link => issue.link.sub(/^https?\:\/\//, ''),
+          :number => issue.number,
+          :title => issue.title }
+
+        unless user_options[:substitution_data][:answered_questions].empty?
           options[:recipients] << user_options
           @simple_spark.transmissions.create(options)
           user.update(last_notified: Time.now)
