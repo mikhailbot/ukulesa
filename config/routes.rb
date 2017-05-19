@@ -6,6 +6,6 @@ Rails.application.routes.draw do
 
   scope module: :pages do
     get '/profile', to: 'profiles#index'
-
+    get '/profile/update', to: 'profiles#update'
   end
 end

@@ -18,6 +18,15 @@
 
       .current-setting {
         padding-bottom: 2rem;
+
+        .setting {
+          padding-top: 0.5rem;
+
+          a {
+            color: #bdc3c7;
+            text-decoration: none;
+          }
+        }
       }
     }
     .ama-list {

@@ -2,12 +2,14 @@
   <div class="wrapper">
     <div class="notification-setting">
       <div class="current-setting">
-        <span class="label">Your current notification schedule:</span>
-        <% if current_user.notification_schedule == 1 %>
-          once a day
-        <% else %>
-          multiple times a day
-        <% end %>
+        <div class="label">Your current notification schedule:</div>
+        <div class="setting">
+          <% if current_user.notification_schedule == 1 %>
+            once a day / <%= link_to "multiple times a day", action: "update" %>
+           <% else %>
+            <%= link_to "once a day", action: "update" %> / multiple times a day
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="ama-list">
