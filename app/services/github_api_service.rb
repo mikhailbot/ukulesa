@@ -44,24 +44,27 @@ class GithubApiService
   end
 
   def repo_closed_issues(repo)
-    issues = @github.issues.list user: repo.owner_name, repo: repo.name, state: 'closed', since: repo.last_checked.to_formatted_s(:iso8601)
+    last_checked = repo.last_checked.to_formatted_s(:iso8601)
+    issues = @github.issues.list user: repo.owner_name, repo: repo.name, state: 'closed', since: last_checked
 
     issues.each do |issue|
-      begin
-        new_issue = Issue.create(:repo_id => repo.id,
-        :number => issue.number,
-        :title => issue.title,
-        :link => issue.html_url,
-        :closed_at => DateTime.parse(issue.closed_at))
+      if issue.closed_at >= last_checked
+        begin
+          new_issue = Issue.create(:repo_id => repo.id,
+          :number => issue.number,
+          :title => issue.title,
+          :link => issue.html_url,
+          :closed_at => DateTime.parse(issue.closed_at))
 
-        answer = retrieve_ama_answer(repo.owner_name, repo.name, issue.number)
-        html_answer = convert_to_html(answer)
-        new_issue.update(answer: html_answer)
+          answer = retrieve_ama_answer(repo.owner_name, repo.name, issue.number)
+          html_answer = convert_to_html(answer)
+          new_issue.update(answer: html_answer)
 
-        new_issue.save!
-        SendImmediateEmailWorker.perform_async(new_issue.id)
-      rescue ActiveRecord::RecordInvalid
-        puts "Issue #{issue.number} already exists for #{repo.full_name}"
+          new_issue.save!
+          SendImmediateEmailWorker.perform_async(new_issue.id)
+        rescue ActiveRecord::RecordInvalid
+          puts "Issue #{issue.number} already exists for #{repo.full_name}"
+        end
       end
     end unless issues.nil?
 
