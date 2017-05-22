@@ -5,6 +5,7 @@ For development you need a `.env` file with the following entries:
 ```ruby
 GITHUB_ID=abcdef0123456789
 GITHUB_SECRET=abcdef0123456789abcdef0123456789
+GITHUB_ACCESS_TOKEN=abcdef0123456789abcdef0123456789
 SPARKPOST_API_KEY=abcdef0123456789abcdef0123456789
 ROLLBAR_ACCESS_TOKEN=abcdef0123456789abcdef0123456789
 ```
