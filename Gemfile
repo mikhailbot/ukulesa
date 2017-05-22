@@ -24,6 +24,8 @@ gem 'sidekiq'
 gem 'pg'
 gem 'redcarpet'
 gem 'meta-tags'
+gem 'rollbar'
+gem 'oj', '~> 2.12.14'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

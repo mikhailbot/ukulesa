@@ -6,6 +6,7 @@ For development you need a `.env` file with the following entries:
 GITHUB_ID=abcdef0123456789
 GITHUB_SECRET=abcdef0123456789abcdef0123456789
 SPARKPOST_API_KEY=abcdef0123456789abcdef0123456789
+ROLLBAR_ACCESS_TOKEN=abcdef0123456789abcdef0123456789
 ```
 
 Install dependencies and start Rails servers (Ruby 2.3.3, yarn 0.23.4)
