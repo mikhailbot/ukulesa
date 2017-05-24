@@ -86,9 +86,13 @@ class GithubApiService
     answer
   end
 
-  def convert_to_html(string)
-    renderer = Redcarpet::Render::HTML.new()
-    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
-    markdown.render(string)
+  def convert_to_html(string=nil)
+    unless string.nil?
+      renderer = Redcarpet::Render::HTML.new()
+      markdown = Redcarpet::Markdown.new(renderer, extensions = {})
+      markdown.render(string)
+    else
+      no_answer = 'No answer provided.'
+    end
   end
 end
