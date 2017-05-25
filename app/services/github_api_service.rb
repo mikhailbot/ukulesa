@@ -96,7 +96,7 @@ class GithubApiService
       markdown = Redcarpet::Markdown.new(renderer, extensions = {})
       markdown.render(string)
     else
-      no_answer = ''
+      nil
     end
   end
 end

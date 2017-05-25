@@ -107,7 +107,11 @@
                       <tr>
                         <td style="font-family:sans-serif;font-size:15px;vertical-align:top;">
                           <p style="font-family:sans-serif;font-size:15px;font-weight:normal;margin:0;Margin-bottom:15px;">
-                            {{{ loop_var.answer }}}
+                            {{ if loop_var.answer }}
+                              {{{ loop_var.answer }}}
+                            {{ else }}
+                              No answer was provided sadly!
+                            {{ end }}
                           </p>
                         </td>
                       </tr>
