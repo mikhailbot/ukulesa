@@ -56,9 +56,13 @@ class GithubApiService
           :link => issue.html_url,
           :closed_at => DateTime.parse(issue.closed_at))
 
+          question = issue.body
+          html_question = convert_to_html(question)
+
           answer = retrieve_ama_answer(repo.owner_name, repo.name, issue.number)
           html_answer = convert_to_html(answer)
-          new_issue.update(answer: html_answer)
+          
+          new_issue.update({ :answer => html_answer, :question => html_question })
 
           new_issue.save!
           SendImmediateEmailWorker.perform_async(new_issue.id)
@@ -92,7 +96,7 @@ class GithubApiService
       markdown = Redcarpet::Markdown.new(renderer, extensions = {})
       markdown.render(string)
     else
-      no_answer = 'No answer provided.'
+      no_answer = ''
     end
   end
 end

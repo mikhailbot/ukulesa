@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518170655) do
+ActiveRecord::Schema.define(version: 20170525013644) do
 
   create_table "issues", force: :cascade do |t|
     t.integer "number"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170518170655) do
     t.integer "repo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "question"
     t.index ["repo_id"], name: "index_issues_on_repo_id"
   end
 
