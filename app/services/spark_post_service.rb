@@ -44,7 +44,8 @@ class SparkPostService
             :answer => issue.answer,
             :link => issue.link.sub(/^https?\:\/\//, ''),
             :number => issue.number,
-            :title => issue.title }
+            :title => issue.title,
+            :avatar_url => issue.repo.avatar_url }
           end
         end
 
@@ -71,7 +72,8 @@ class SparkPostService
           :answer => issue.answer,
           :link => issue.link.sub(/^https?\:\/\//, ''),
           :number => issue.number,
-          :title => issue.title }
+          :title => issue.title,
+          :avatar_url => issue.repo.avatar_url }
 
         unless user_options[:substitution_data][:answered_questions].empty?
           options[:recipients] << user_options
